@@ -1,14 +1,13 @@
 package com.example.cryptohodl.view.main
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import com.example.cryptohodl.model.Asset
+import com.example.cryptohodl.view.main.dialogs.addDialog
+import com.example.cryptohodl.view.main.dialogs.settingsDialog
 import com.example.cryptohodl.view.main.table.assetTable
-import com.example.cryptohodl.view.main.table.tableRow
 
 @Composable
 fun homeScreen(
@@ -20,22 +19,30 @@ fun homeScreen(
     image: Int,
     currency: String,
     onDeleteClick: (Int?) -> Unit,
-    onAddClick: () -> Unit,
-    onSettingsClicked: () -> Unit,
+    toggleAddDialog: () -> Unit,
+    toggleSettingsDialog: () -> Unit,
     onRowClicked: (Int?) -> Unit,
+    showAdd: Boolean,
+    showSettings: Boolean,
 ){
     Column {
         header(value, invested, gainsPercentage, gainsFiat, image, currency)
         assetTable(assets, currency, onDeleteClick, onRowClicked)
         Button(onClick = {
-            onAddClick()
+            toggleAddDialog()
         }) {
             Text("NEW")
         }
         Button(onClick = {
-            onSettingsClicked()
+            toggleSettingsDialog()
         }) {
             Text("SETTINGS")
         }
+    }
+    if(showAdd){
+        addDialog(toggleAddDialog)
+    }
+    if(showSettings){
+        settingsDialog(toggleSettingsDialog)
     }
 }
