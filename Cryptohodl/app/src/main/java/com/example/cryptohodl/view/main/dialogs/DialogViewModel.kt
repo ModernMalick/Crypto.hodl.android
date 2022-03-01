@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 class DialogViewModel : ViewModel() {
     private var showAdd: MutableLiveData<Boolean>? = null
     private var showSettings: MutableLiveData<Boolean>? = null
+    private var showModify: MutableLiveData<Int>? = null
     private var liveDataMerger: MediatorLiveData<String>? = null
 
     fun getShowAdd(): MutableLiveData<Boolean> {
@@ -33,6 +34,19 @@ class DialogViewModel : ViewModel() {
     fun toggleShowSettings() {
         val status = getShowSettings()
         showSettings!!.value = !status.value!!
+    }
+
+    fun getShowModify(): MutableLiveData<Int> {
+        if (showModify == null) {
+            showModify = MutableLiveData<Int>()
+            showModify!!.value = 0
+        }
+        return showModify!!
+    }
+
+    fun toggleShowModify(id: Int) {
+        getShowModify()
+        showModify!!.value = id
     }
 
     fun getMerger(): MediatorLiveData<String> {

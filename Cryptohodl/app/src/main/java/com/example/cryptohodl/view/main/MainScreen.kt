@@ -6,6 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.example.cryptohodl.model.Asset
 import com.example.cryptohodl.view.main.dialogs.addDialog
+import com.example.cryptohodl.view.main.dialogs.modifyDialog
 import com.example.cryptohodl.view.main.dialogs.settingsDialog
 import com.example.cryptohodl.view.main.table.assetTable
 
@@ -21,13 +22,14 @@ fun homeScreen(
     onDeleteClick: (Int?) -> Unit,
     toggleAddDialog: () -> Unit,
     toggleSettingsDialog: () -> Unit,
-    onRowClicked: (Int?) -> Unit,
+    toggleModifyDialog: (Int) -> Unit,
     showAdd: Boolean,
     showSettings: Boolean,
+    showModify: String,
 ){
     Column {
         header(value, invested, gainsPercentage, gainsFiat, image, currency)
-        assetTable(assets, currency, onDeleteClick, onRowClicked)
+        assetTable(assets, currency, onDeleteClick, toggleModifyDialog)
         Button(onClick = {
             toggleAddDialog()
         }) {
@@ -44,5 +46,8 @@ fun homeScreen(
     }
     if(showSettings){
         settingsDialog(toggleSettingsDialog)
+    }
+    if(showModify != "0" && showModify != ""){
+        modifyDialog(toggleModifyDialog, showModify.toInt())
     }
 }

@@ -69,9 +69,22 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
+            dialogViewModel.getMerger().addSource(dialogViewModel.getShowModify()) { showModify ->
+                if(showModify != 0){
+                    dialogViewModel.getMerger().value = showModify.toString()
+                } else {
+                    dialogViewModel.getMerger().value = ""
+                }
+            }
+
             dialogViewModel.getMerger().observe(this, Observer { result ->
                 val showAdd = result.equals("add")
                 val showSettings = result.equals("settings")
+                var showModify = ""
+
+                if (!showAdd && !showSettings){
+                    showModify = result
+                }
 
                 setContent {
                     homeScreen(
@@ -85,9 +98,10 @@ class MainActivity : ComponentActivity() {
                         deleteAsset,
                         toggleAddDialog,
                         toggleSettingsDialog,
-                        rowClick,
+                        toggleModifyDialog,
                         showAdd,
-                        showSettings
+                        showSettings,
+                        showModify
                     )
                 }
             })
@@ -117,8 +131,8 @@ class MainActivity : ComponentActivity() {
         dialogViewModel.toggleShowSettings()
     }
 
-    private val rowClick = fun(id: Int?){
-        Log.e("CLICKED", "ROW $id")
+    private val toggleModifyDialog = fun(id: Int){
+        dialogViewModel.toggleShowModify(id)
     }
 
     private val deleteAsset = fun(id: Int?){

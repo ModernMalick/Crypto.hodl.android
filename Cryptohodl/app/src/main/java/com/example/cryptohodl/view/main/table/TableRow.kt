@@ -18,9 +18,9 @@ fun tableRow(
     color: Color,
     currency: String,
     onDeleteClick: (Int?) -> Unit,
-    onRowClick: (Int?) -> Unit,
+    onRowClick: (Int) -> Unit,
 ){
-    Row(modifier = Modifier.clickable { onRowClick(asset.id) }) {
+    Row(modifier = Modifier.clickable { asset.id?.let { onRowClick(it) } }) {
         Text(asset.ticker)
         Text("${asset.invested}$currency")
         Text("${asset.value}$currency ")

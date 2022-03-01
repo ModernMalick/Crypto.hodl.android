@@ -10,7 +10,7 @@ fun assetTable(
     assets: List<Asset>,
     currency: String,
     onDeleteClick: (Int?) -> Unit,
-    onRowClick: (Int?) -> Unit,
+    onRowClick: (Int) -> Unit,
 ) {
     Column {
         assets.forEach { asset ->
