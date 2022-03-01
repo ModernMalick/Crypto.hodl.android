@@ -1,4 +1,4 @@
-package com.example.cryptohodl.ui.theme
+package com.example.cryptohodl.view.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
