@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
     version = 1
 )
 
-abstract class AssetDatabase: RoomDatabase() {
+abstract class AssetDatabase : RoomDatabase() {
     abstract val assetDao: AssetDao
 
     companion object {

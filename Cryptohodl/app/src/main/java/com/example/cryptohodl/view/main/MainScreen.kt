@@ -26,7 +26,7 @@ fun homeScreen(
     showAdd: Boolean,
     showSettings: Boolean,
     showModify: String,
-){
+) {
     Column {
         header(value, invested, gainsPercentage, gainsFiat, image, currency)
         assetTable(assets, currency, onDeleteClick, toggleModifyDialog)
@@ -41,13 +41,13 @@ fun homeScreen(
             Text("SETTINGS")
         }
     }
-    if(showAdd){
+    if (showAdd) {
         addDialog(toggleAddDialog)
     }
-    if(showSettings){
+    if (showSettings) {
         settingsDialog(toggleSettingsDialog)
     }
-    if(showModify != "0" && showModify != ""){
+    if (showModify != "0" && showModify != "") {
         modifyDialog(toggleModifyDialog, showModify.toInt())
     }
 }

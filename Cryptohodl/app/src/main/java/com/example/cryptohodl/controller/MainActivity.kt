@@ -34,9 +34,7 @@ class MainActivity : ComponentActivity() {
 
         assetViewModel = ViewModelProvider(this)[AssetViewModel::class.java]
         dialogViewModel = ViewModelProvider(this)[DialogViewModel::class.java]
-
         assetViewModel.getAssetList()
-
         assetViewModel.getAssetList().observe(this, Observer { assets ->
             var value: Long = 0
             var invested: Long = 0
@@ -48,41 +46,38 @@ class MainActivity : ComponentActivity() {
                 invested += asset.invested
             }
 
-            if(invested != 0.toLong()) {
+            if (invested != 0.toLong()) {
                 gainsPercentage = ((value - invested) * 100) / invested
                 gainsFiat = value - invested
             }
 
             dialogViewModel.getMerger().addSource(dialogViewModel.getShowAdd()) { showAdd ->
-                if(showAdd){
+                if (showAdd) {
                     dialogViewModel.getMerger().value = "add"
                 } else {
                     dialogViewModel.getMerger().value = ""
                 }
             }
-
             dialogViewModel.getMerger().addSource(dialogViewModel.getShowSettings()) { showSettings ->
-                if(showSettings){
+                if (showSettings) {
                     dialogViewModel.getMerger().value = "settings"
                 } else {
                     dialogViewModel.getMerger().value = ""
                 }
             }
-
             dialogViewModel.getMerger().addSource(dialogViewModel.getShowModify()) { showModify ->
-                if(showModify != 0){
+                if (showModify != 0) {
                     dialogViewModel.getMerger().value = showModify.toString()
                 } else {
                     dialogViewModel.getMerger().value = ""
                 }
             }
-
             dialogViewModel.getMerger().observe(this, Observer { result ->
                 val showAdd = result.equals("add")
                 val showSettings = result.equals("settings")
                 var showModify = ""
 
-                if (!showAdd && !showSettings){
+                if (!showAdd && !showSettings) {
                     showModify = result
                 }
 
@@ -113,7 +108,7 @@ class MainActivity : ComponentActivity() {
     private fun buildAssetList() {
         val thread = Thread {
             try {
-                assetDao.getAssets().forEach{ asset ->
+                assetDao.getAssets().forEach { asset ->
                     assetViewModel.addToCurrentList(asset)
                 }
             } catch (e: Exception) {
@@ -123,20 +118,18 @@ class MainActivity : ComponentActivity() {
         thread.start()
     }
 
-    private val toggleAddDialog = fun(){
+    private val deleteAsset = fun(id: Int?) {
+        Log.e("CLICKED", "DELETE $id")
+    }
+
+    private val toggleAddDialog = fun() {
         dialogViewModel.toggleShowAdd()
     }
-
-    private val toggleSettingsDialog = fun(){
+    private val toggleSettingsDialog = fun() {
         dialogViewModel.toggleShowSettings()
     }
-
-    private val toggleModifyDialog = fun(id: Int){
+    private val toggleModifyDialog = fun(id: Int) {
         dialogViewModel.toggleShowModify(id)
-    }
-
-    private val deleteAsset = fun(id: Int?){
-        Log.e("CLICKED", "DELETE $id")
     }
 }
 

@@ -14,8 +14,10 @@ fun modifyDialog(onDismissClicked: (Int) -> Unit, id: Int?) {
 
     if (openDialog.value) {
         AlertDialog(
-            onDismissRequest = { openDialog.value = false
-                onDismissClicked(0)},
+            onDismissRequest = {
+                openDialog.value = false
+                onDismissClicked(0)
+            },
             title = {
                 Text(
                     text = "AlertDialog title $id"

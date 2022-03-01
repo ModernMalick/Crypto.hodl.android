@@ -19,7 +19,7 @@ fun tableRow(
     currency: String,
     onDeleteClick: (Int?) -> Unit,
     onRowClick: (Int) -> Unit,
-){
+) {
     Row(modifier = Modifier.clickable { asset.id?.let { onRowClick(it) } }) {
         Text(asset.ticker)
         Text("${asset.invested}$currency")
@@ -37,7 +37,7 @@ fun tableRow(
 @Composable
 fun rowPreview() {
     val asset = Asset(1, "CRO", 100, 250)
-    val del = fun(id: Int?){
+    val del = fun(id: Int?) {
         Log.e("CLICKED", "DELETE $id")
     }
     tableRow(asset, asset.value - asset.invested, Color.Green, "$", del, del)

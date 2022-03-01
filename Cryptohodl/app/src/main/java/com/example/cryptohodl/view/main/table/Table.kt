@@ -16,9 +16,9 @@ fun assetTable(
         assets.forEach { asset ->
             val gain = asset.value - asset.invested
             var color = Color.Gray
-            if(gain > 0){
+            if (gain > 0) {
                 color = Color.Green
-            } else if(gain < 0) {
+            } else if (gain < 0) {
                 color = Color.Red
             }
             tableRow(asset, gain, color, currency, onDeleteClick, onRowClick)

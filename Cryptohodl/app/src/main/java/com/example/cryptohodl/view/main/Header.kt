@@ -18,11 +18,11 @@ fun header(
     gainsFiat: Long,
     image: Int,
     currency: String,
-){
+) {
     var color: Color = Color.Gray
-    if(gainsFiat > 0){
+    if (gainsFiat > 0) {
         color = Color.Green
-    } else if(gainsFiat < 0) {
+    } else if (gainsFiat < 0) {
         color = Color.Red
     }
     Row {

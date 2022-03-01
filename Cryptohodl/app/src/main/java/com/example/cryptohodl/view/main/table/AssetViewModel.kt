@@ -3,7 +3,6 @@ package com.example.cryptohodl.view.main.table
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cryptohodl.model.Asset
-import kotlin.collections.ArrayList
 
 class AssetViewModel : ViewModel() {
     private var assets: MutableLiveData<ArrayList<Asset>>? = null

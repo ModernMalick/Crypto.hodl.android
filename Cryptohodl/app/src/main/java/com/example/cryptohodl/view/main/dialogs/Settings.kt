@@ -14,8 +14,10 @@ fun settingsDialog(onDismissClicked: () -> Unit) {
 
     if (openDialog.value) {
         AlertDialog(
-            onDismissRequest = { openDialog.value = false
-                onDismissClicked()},
+            onDismissRequest = {
+                openDialog.value = false
+                onDismissClicked()
+            },
             title = {
                 Text(
                     text = "AlertDialog title"
