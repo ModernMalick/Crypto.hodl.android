@@ -21,15 +21,16 @@ fun homeScreen(
     onDeleteClick: (Int) -> Unit,
     toggleAddDialog: () -> Unit,
     toggleSettingsDialog: () -> Unit,
-    toggleModifyDialog: (Int) -> Unit,
+    toggleModifyDialog: (String) -> Unit,
     showAdd: Boolean,
     showSettings: Boolean,
     showModify: String,
     onSaveAdd: (Asset) -> Unit,
+    onSaveModify: (Asset) -> Unit
 ) {
     Column {
         header(value, invested, gainsPercentage, gainsFiat, image, currency)
-        assetTable(assets, currency, onDeleteClick, toggleModifyDialog)
+        assetTable(assets, currency, onDeleteClick, toggleModifyDialog, showModify, onSaveModify)
         Button(onClick = {
             toggleAddDialog()
         }) {
@@ -47,7 +48,4 @@ fun homeScreen(
     if (showSettings) {
         settingsDialog(toggleSettingsDialog)
     }
-//    if (showModify != "0" && showModify != "") {
-//        modifyDialog(toggleModifyDialog, )
-//    }
 }

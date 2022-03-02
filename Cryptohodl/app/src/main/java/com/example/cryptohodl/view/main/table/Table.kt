@@ -10,7 +10,9 @@ fun assetTable(
     assets: List<Asset>,
     currency: String,
     onDeleteClick: (Int) -> Unit,
-    onRowClick: (Int) -> Unit,
+    onRowClick: (String) -> Unit,
+    showModify: String,
+    onSaveClicked: (Asset) -> Unit,
 ) {
     Column {
         assets.forEach { asset ->
@@ -21,7 +23,7 @@ fun assetTable(
             } else if (gain < 0) {
                 color = Color.Red
             }
-            tableRow(asset, gain, color, currency, onDeleteClick, onRowClick)
+            tableRow(asset, gain, color, currency, onDeleteClick, onRowClick, showModify, onSaveClicked)
         }
     }
 }

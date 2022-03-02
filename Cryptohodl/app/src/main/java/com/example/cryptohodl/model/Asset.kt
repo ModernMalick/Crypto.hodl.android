@@ -16,5 +16,9 @@ class Asset(
     val invested: Long,
 
     @ColumnInfo(name = "value")
-    val value: Long
-)
+    val value: Long,
+) {
+    override fun toString(): String = "$id,$ticker,$invested,$value"
+}
+
+

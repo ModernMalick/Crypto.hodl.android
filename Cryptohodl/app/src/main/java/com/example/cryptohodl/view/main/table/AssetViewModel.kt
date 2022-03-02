@@ -24,8 +24,4 @@ class AssetViewModel : ViewModel() {
         assets?.value?.add(asset)
         assets?.notifyObserver()
     }
-
-    fun removeFromCurrentList(asset: Asset) {
-        assets?.value?.remove(asset)
-    }
 }

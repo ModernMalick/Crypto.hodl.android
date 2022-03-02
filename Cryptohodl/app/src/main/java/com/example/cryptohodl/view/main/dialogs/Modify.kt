@@ -1,5 +1,6 @@
 package com.example.cryptohodl.view.main.dialogs
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.KeyboardOptions
@@ -19,12 +20,11 @@ import com.example.cryptohodl.toaster
 
 @Composable
 fun modifyDialog(
-    onDismissClicked: (Int) -> Unit,
-    onSaveClicked: (asset: Asset) -> Unit,
+    onDismissClicked: (String) -> Unit,
+    onSaveClicked: (Asset) -> Unit,
     asset: Asset,
     currency: String,
 ) {
-
     val openDialog = remember { mutableStateOf(true) }
     val properties = DialogProperties()
     val tickerState = remember { mutableStateOf(TextFieldValue()) }
@@ -35,7 +35,7 @@ fun modifyDialog(
         Dialog(
             onDismissRequest = {
                 openDialog.value = false
-                onDismissClicked(0)
+                onDismissClicked("")
             },
             properties = properties,
             content = {
@@ -85,17 +85,33 @@ fun modifyDialog(
                         Text(currency)
                     }
                     Button(onClick = {
-                        if (tickerState.value.text != "" && investedState.value.text != "" && valueState.value.text != "") {
-                            val newAsset = Asset(
-                                ticker = tickerState.value.text,
-                                invested = investedState.value.text.toLong(),
-                                value = valueState.value.text.toLong()
-                            )
-                            onSaveClicked(newAsset)
-                            onDismissClicked(0)
+                        val ticker = if(tickerState.value.text != ""){
+                            tickerState.value.text
                         } else {
-                            toaster(HodlApp.context, "Fill all fields to save")
+                            asset.ticker
                         }
+
+                        val invested = if(investedState.value.text != ""){
+                            investedState.value.text.toLong()
+                        } else {
+                            asset.invested
+                        }
+
+                        val value = if(valueState.value.text != ""){
+                            valueState.value.text.toLong()
+                        } else {
+                            asset.value
+                        }
+
+                        val newAsset = Asset(
+                            ticker = ticker,
+                            invested = invested,
+                            value = value,
+                            id = asset.id
+                        )
+
+                        onSaveClicked(newAsset)
+                        onDismissClicked("")
                     }) {
                         Text("SAVE")
                     }

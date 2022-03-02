@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.cryptohodl.model.Asset
+import com.example.cryptohodl.view.main.dialogs.modifyDialog
 
 @Composable
 fun tableRow(
@@ -18,9 +19,11 @@ fun tableRow(
     color: Color,
     currency: String,
     onDeleteClick: (Int) -> Unit,
-    onRowClick: (Int) -> Unit,
+    onRowClick: (String) -> Unit,
+    showModify: String,
+    onSaveClicked: (Asset) -> Unit,
 ) {
-    Row(modifier = Modifier.clickable { asset.id?.let { onRowClick(it) } }) {
+    Row(modifier = Modifier.clickable { asset.id?.let { onRowClick(asset.toString()) } }) {
         Text(asset.ticker)
         Text("${asset.invested}$currency")
         Text("${asset.value}$currency ")
@@ -31,14 +34,20 @@ fun tableRow(
             Text("DELETE")
         }
     }
-}
+    if (showModify.isNotBlank()) {
+        val assetString = showModify.split(",")
+        val id = assetString[0].toInt()
+        val ticker = assetString[1].toString()
+        val invested = assetString[2].toLong()
+        val value = assetString[3].toLong()
 
-@Preview(showBackground = true)
-@Composable
-fun rowPreview() {
-    val asset = Asset(1, "CRO", 100, 250)
-    val del = fun(id: Int?) {
-        Log.e("CLICKED", "DELETE $id")
+        val newAsset = Asset(id, ticker, invested, value)
+
+        modifyDialog(
+            onDismissClicked = onRowClick,
+            onSaveClicked = onSaveClicked,
+            asset = newAsset,
+            currency = currency
+        )
     }
-    tableRow(asset, asset.value - asset.invested, Color.Green, "$", del, del)
 }

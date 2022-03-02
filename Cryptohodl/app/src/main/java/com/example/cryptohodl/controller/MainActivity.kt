@@ -52,8 +52,8 @@ class MainActivity : ComponentActivity() {
             }
         }
         dialogViewModel.getMerger().addSource(dialogViewModel.getShowModify()) { showModify ->
-            if (showModify != 0) {
-                dialogViewModel.getMerger().value = showModify.toString()
+            if (showModify.isNotBlank()) {
+                dialogViewModel.getMerger().value = showModify
             } else {
                 dialogViewModel.getMerger().value = ""
             }
@@ -61,7 +61,6 @@ class MainActivity : ComponentActivity() {
 
         assetViewModel.getAssetList()
         assetViewModel.getAssetList().observe(this, Observer { assets ->
-            Log.e("CHANGED", "VALUE")
 
             var value: Long = 0
             var invested: Long = 0
@@ -83,7 +82,7 @@ class MainActivity : ComponentActivity() {
                 val showSettings = result.equals("settings")
                 var showModify = ""
 
-                if (!showAdd && !showSettings) {
+                if(!showAdd && !showSettings && result != ""){
                     showModify = result
                 }
 
@@ -103,12 +102,12 @@ class MainActivity : ComponentActivity() {
                         showAdd,
                         showSettings,
                         showModify,
-                        addAsset
+                        addAsset,
+                        modifyAsset
                     )
                 }
             })
         })
-
         buildAssetList()
     }
 
@@ -149,10 +148,27 @@ class MainActivity : ComponentActivity() {
     }
 
     private val deleteAsset = fun(id: Int) {
-        Log.e("CLICKED", "DELETE $id")
+        Log.e("DELETE", id.toString())
         val thread = Thread {
             try {
                 assetDao.deleteAsset(id)
+                runOnUiThread {
+                    buildAssetList()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        thread.start()
+    }
+
+    private val modifyAsset = fun(asset: Asset) {
+        Log.e("MODIFY", asset.id.toString())
+        val thread = Thread {
+            try {
+                asset.id?.let {
+                    assetDao.updateAsset(asset.ticker, asset.invested, asset.value, it)
+                }
                 runOnUiThread {
                     buildAssetList()
                 }
@@ -169,8 +185,8 @@ class MainActivity : ComponentActivity() {
     private val toggleSettingsDialog = fun() {
         dialogViewModel.toggleShowSettings()
     }
-    private val toggleModifyDialog = fun(id: Int) {
-        dialogViewModel.toggleShowModify(id)
+    private val toggleModifyDialog = fun(string: String) {
+        dialogViewModel.toggleShowModify(string)
     }
 }
 
