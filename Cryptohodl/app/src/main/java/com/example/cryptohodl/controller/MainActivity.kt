@@ -1,5 +1,6 @@
 package com.example.cryptohodl.controller
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -86,6 +87,9 @@ class MainActivity : ComponentActivity() {
                     showModify = result
                 }
 
+                val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
+                val currency = sharedPreferences.getString("currency", "$").toString()
+
                 setContent {
                     homeScreen(
                         assets,
@@ -94,7 +98,7 @@ class MainActivity : ComponentActivity() {
                         gainsPercentage,
                         gainsFiat,
                         R.drawable.placeholder,
-                        "$",
+                        currency,
                         deleteAsset,
                         toggleAddDialog,
                         toggleSettingsDialog,
@@ -184,21 +188,13 @@ class MainActivity : ComponentActivity() {
     }
     private val toggleSettingsDialog = fun() {
         dialogViewModel.toggleShowSettings()
+//        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+//        with (sharedPref.edit()) {
+//            putString("currency", "€")
+//            apply()
+//        }
     }
     private val toggleModifyDialog = fun(string: String) {
         dialogViewModel.toggleShowModify(string)
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//
-//}
-
-//            it.forEach { asset ->
-//                Log.e("ID : " + asset.id, "TICKER : " + asset.ticker + " INVESTED : " + asset.invested + " VALUE : " + asset.value)
-//            }
-
-//                val asset = Asset(ticker = "eth", value = 15, invested = 5)
-//                assetDao.insertAssets(asset)
