@@ -26,6 +26,7 @@ fun homeScreen(
     showAdd: Boolean,
     showSettings: Boolean,
     showModify: String,
+    onSaveAdd: (Asset) -> Unit
 ) {
     Column {
         header(value, invested, gainsPercentage, gainsFiat, image, currency)
@@ -42,7 +43,7 @@ fun homeScreen(
         }
     }
     if (showAdd) {
-        addDialog(toggleAddDialog)
+        addDialog(toggleAddDialog, onSaveAdd, currency)
     }
     if (showSettings) {
         settingsDialog(toggleSettingsDialog)

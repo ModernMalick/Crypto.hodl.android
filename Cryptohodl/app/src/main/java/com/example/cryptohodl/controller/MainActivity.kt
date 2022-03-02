@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.example.cryptohodl.R
+import com.example.cryptohodl.model.Asset
 import com.example.cryptohodl.model.AssetDao
 import com.example.cryptohodl.model.AssetDatabase
 import com.example.cryptohodl.view.main.dialogs.DialogViewModel
@@ -96,7 +97,8 @@ class MainActivity : ComponentActivity() {
                         toggleModifyDialog,
                         showAdd,
                         showSettings,
-                        showModify
+                        showModify,
+                        addAsset
                     )
                 }
             })
@@ -111,6 +113,19 @@ class MainActivity : ComponentActivity() {
                 assetDao.getAssets().forEach { asset ->
                     assetViewModel.addToCurrentList(asset)
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        thread.start()
+    }
+
+    private val addAsset = fun (asset: Asset) {
+        val thread = Thread {
+            try {
+                assetDao.insertAssets(asset)
+                assetViewModel.addToCurrentList(asset)
+                Log.e("ID : " + asset.id, "TICKER : " + asset.ticker + " INVESTED : " + asset.invested + " VALUE : " + asset.value)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

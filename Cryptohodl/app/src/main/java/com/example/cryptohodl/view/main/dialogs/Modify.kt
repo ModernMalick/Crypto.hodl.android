@@ -9,7 +9,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun modifyDialog(onDismissClicked: (Int) -> Unit, id: Int?) {
+fun modifyDialog(onDismissClicked: (Int) -> Unit,
+                 id: Int?
+) {
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
