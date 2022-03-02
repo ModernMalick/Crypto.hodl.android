@@ -14,7 +14,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.example.cryptohodl.HodlApp
+import com.example.cryptohodl.controller.MainActivity
 import com.example.cryptohodl.model.Asset
+import com.example.cryptohodl.toaster
 
 @Composable
 fun addDialog(onDismissClicked: () -> Unit,
@@ -81,13 +84,17 @@ fun addDialog(onDismissClicked: () -> Unit,
                         Text(currency)
                     }
                     Button(onClick = {
-                        val asset = Asset(
-                            ticker = tickerState.value.text,
-                            invested = investedState.value.text.toLong(),
-                            value = valueState.value.text.toLong()
+                        if(tickerState.value.text != "" && investedState.value.text != "" && valueState.value.text != ""){
+                            val asset = Asset(
+                                ticker = tickerState.value.text,
+                                invested = investedState.value.text.toLong(),
+                                value = valueState.value.text.toLong()
                             )
-                        onSaveClicked(asset)
-                        onDismissClicked()
+                            onSaveClicked(asset)
+                            onDismissClicked()
+                        } else {
+                            toaster(HodlApp.context, "Fill all fields to save")
+                        }
                     }) {
                         Text("SAVE")
                     }
