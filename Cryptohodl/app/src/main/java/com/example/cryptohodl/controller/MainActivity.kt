@@ -36,8 +36,33 @@ class MainActivity : ComponentActivity() {
 
         assetViewModel = ViewModelProvider(this)[AssetViewModel::class.java]
         dialogViewModel = ViewModelProvider(this)[DialogViewModel::class.java]
+
+        dialogViewModel.getMerger().addSource(dialogViewModel.getShowAdd()) { showAdd ->
+            if (showAdd) {
+                dialogViewModel.getMerger().value = "add"
+            } else {
+                dialogViewModel.getMerger().value = ""
+            }
+        }
+        dialogViewModel.getMerger().addSource(dialogViewModel.getShowSettings()) { showSettings ->
+            if (showSettings) {
+                dialogViewModel.getMerger().value = "settings"
+            } else {
+                dialogViewModel.getMerger().value = ""
+            }
+        }
+        dialogViewModel.getMerger().addSource(dialogViewModel.getShowModify()) { showModify ->
+            if (showModify != 0) {
+                dialogViewModel.getMerger().value = showModify.toString()
+            } else {
+                dialogViewModel.getMerger().value = ""
+            }
+        }
+
         assetViewModel.getAssetList()
         assetViewModel.getAssetList().observe(this, Observer { assets ->
+            Log.e("CHANGED", "VALUE")
+
             var value: Long = 0
             var invested: Long = 0
             var gainsPercentage: Long = 0
@@ -53,27 +78,6 @@ class MainActivity : ComponentActivity() {
                 gainsFiat = value - invested
             }
 
-            dialogViewModel.getMerger().addSource(dialogViewModel.getShowAdd()) { showAdd ->
-                if (showAdd) {
-                    dialogViewModel.getMerger().value = "add"
-                } else {
-                    dialogViewModel.getMerger().value = ""
-                }
-            }
-            dialogViewModel.getMerger().addSource(dialogViewModel.getShowSettings()) { showSettings ->
-                if (showSettings) {
-                    dialogViewModel.getMerger().value = "settings"
-                } else {
-                    dialogViewModel.getMerger().value = ""
-                }
-            }
-            dialogViewModel.getMerger().addSource(dialogViewModel.getShowModify()) { showModify ->
-                if (showModify != 0) {
-                    dialogViewModel.getMerger().value = showModify.toString()
-                } else {
-                    dialogViewModel.getMerger().value = ""
-                }
-            }
             dialogViewModel.getMerger().observe(this, Observer { result ->
                 val showAdd = result.equals("add")
                 val showSettings = result.equals("settings")
@@ -109,10 +113,13 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun buildAssetList() {
+        assetViewModel.clearList()
         val thread = Thread {
             try {
                 assetDao.getAssets().forEach { asset ->
-                    assetViewModel.addToCurrentList(asset)
+                    runOnUiThread{
+                        assetViewModel.addToCurrentList(asset)
+                    }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -125,8 +132,9 @@ class MainActivity : ComponentActivity() {
         val thread = Thread {
             try {
                 assetDao.insertAssets(asset)
-                assetViewModel.addToCurrentList(asset)
-                Log.e("ID : " + asset.id, "TICKER : " + asset.ticker + " INVESTED : " + asset.invested + " VALUE : " + asset.value)
+                runOnUiThread{
+                    buildAssetList()
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }

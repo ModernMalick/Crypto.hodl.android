@@ -52,7 +52,6 @@ class DialogViewModel : ViewModel() {
     fun getMerger(): MediatorLiveData<String> {
         if (liveDataMerger == null) {
             liveDataMerger = MediatorLiveData<String>()
-            liveDataMerger!!.value = ""
         }
         return liveDataMerger!!
     }
