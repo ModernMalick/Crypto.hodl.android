@@ -9,7 +9,7 @@ import com.example.cryptohodl.model.Asset
 fun assetTable(
     assets: List<Asset>,
     currency: String,
-    onDeleteClick: (Int?) -> Unit,
+    onDeleteClick: (Int) -> Unit,
     onRowClick: (Int) -> Unit,
 ) {
     Column {

@@ -1,6 +1,5 @@
 package com.example.cryptohodl.view.main.table
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cryptohodl.model.Asset

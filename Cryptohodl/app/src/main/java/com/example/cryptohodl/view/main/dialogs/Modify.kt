@@ -3,7 +3,9 @@ package com.example.cryptohodl.view.main.dialogs
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,10 +18,11 @@ import com.example.cryptohodl.model.Asset
 import com.example.cryptohodl.toaster
 
 @Composable
-fun modifyDialog(onDismissClicked: (Int) -> Unit,
-                 onSaveClicked: (asset: Asset) -> Unit,
-                 asset: Asset,
-                 currency: String,
+fun modifyDialog(
+    onDismissClicked: (Int) -> Unit,
+    onSaveClicked: (asset: Asset) -> Unit,
+    asset: Asset,
+    currency: String,
 ) {
 
     val openDialog = remember { mutableStateOf(true) }
@@ -82,7 +85,7 @@ fun modifyDialog(onDismissClicked: (Int) -> Unit,
                         Text(currency)
                     }
                     Button(onClick = {
-                        if(tickerState.value.text != "" && investedState.value.text != "" && valueState.value.text != ""){
+                        if (tickerState.value.text != "" && investedState.value.text != "" && valueState.value.text != "") {
                             val newAsset = Asset(
                                 ticker = tickerState.value.text,
                                 invested = investedState.value.text.toLong(),

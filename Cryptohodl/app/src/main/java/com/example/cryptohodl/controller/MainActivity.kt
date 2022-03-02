@@ -1,6 +1,5 @@
 package com.example.cryptohodl.controller
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -12,6 +11,7 @@ import com.example.cryptohodl.R
 import com.example.cryptohodl.model.Asset
 import com.example.cryptohodl.model.AssetDao
 import com.example.cryptohodl.model.AssetDatabase
+import com.example.cryptohodl.notifyObserver
 import com.example.cryptohodl.view.main.dialogs.DialogViewModel
 import com.example.cryptohodl.view.main.homeScreen
 import com.example.cryptohodl.view.main.table.AssetViewModel
@@ -116,9 +116,15 @@ class MainActivity : ComponentActivity() {
         assetViewModel.clearList()
         val thread = Thread {
             try {
-                assetDao.getAssets().forEach { asset ->
-                    runOnUiThread{
-                        assetViewModel.addToCurrentList(asset)
+                if (assetDao.getAssets().isNotEmpty()){
+                    assetDao.getAssets().forEach { asset ->
+                        runOnUiThread {
+                            assetViewModel.addToCurrentList(asset)
+                        }
+                    }
+                } else {
+                    runOnUiThread {
+                        assetViewModel.getAssetList().notifyObserver()
                     }
                 }
             } catch (e: Exception) {
@@ -128,11 +134,11 @@ class MainActivity : ComponentActivity() {
         thread.start()
     }
 
-    private val addAsset = fun (asset: Asset) {
+    private val addAsset = fun(asset: Asset) {
         val thread = Thread {
             try {
                 assetDao.insertAssets(asset)
-                runOnUiThread{
+                runOnUiThread {
                     buildAssetList()
                 }
             } catch (e: Exception) {
@@ -142,8 +148,19 @@ class MainActivity : ComponentActivity() {
         thread.start()
     }
 
-    private val deleteAsset = fun(id: Int?) {
+    private val deleteAsset = fun(id: Int) {
         Log.e("CLICKED", "DELETE $id")
+        val thread = Thread {
+            try {
+                assetDao.deleteAsset(id)
+                runOnUiThread {
+                    buildAssetList()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        thread.start()
     }
 
     private val toggleAddDialog = fun() {

@@ -1,6 +1,5 @@
 package com.example.cryptohodl.view.main.dialogs
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,14 +14,14 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.cryptohodl.HodlApp
-import com.example.cryptohodl.controller.MainActivity
 import com.example.cryptohodl.model.Asset
 import com.example.cryptohodl.toaster
 
 @Composable
-fun addDialog(onDismissClicked: () -> Unit,
-              onSaveClicked: (asset: Asset) -> Unit,
-              currency: String
+fun addDialog(
+    onDismissClicked: () -> Unit,
+    onSaveClicked: (asset: Asset) -> Unit,
+    currency: String
 ) {
     val openDialog = remember { mutableStateOf(true) }
     val properties = DialogProperties()
@@ -39,18 +38,18 @@ fun addDialog(onDismissClicked: () -> Unit,
             properties = properties,
             content = {
                 Column {
-                        TextField(
-                            value = tickerState.value,
-                            onValueChange = {
-                                tickerState.value = it
-                            },
-                            label = {
-                                Text("Ticker")
-                            },
-                            placeholder = {
-                                Text("HODL")
-                            }
-                        )
+                    TextField(
+                        value = tickerState.value,
+                        onValueChange = {
+                            tickerState.value = it
+                        },
+                        label = {
+                            Text("Ticker")
+                        },
+                        placeholder = {
+                            Text("HODL")
+                        }
+                    )
                     Row {
                         TextField(
                             value = investedState.value,
@@ -84,7 +83,7 @@ fun addDialog(onDismissClicked: () -> Unit,
                         Text(currency)
                     }
                     Button(onClick = {
-                        if(tickerState.value.text != "" && investedState.value.text != "" && valueState.value.text != ""){
+                        if (tickerState.value.text != "" && investedState.value.text != "" && valueState.value.text != "") {
                             val asset = Asset(
                                 ticker = tickerState.value.text,
                                 invested = investedState.value.text.toLong(),

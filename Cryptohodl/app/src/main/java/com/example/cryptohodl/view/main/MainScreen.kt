@@ -6,7 +6,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.example.cryptohodl.model.Asset
 import com.example.cryptohodl.view.main.dialogs.addDialog
-import com.example.cryptohodl.view.main.dialogs.modifyDialog
 import com.example.cryptohodl.view.main.dialogs.settingsDialog
 import com.example.cryptohodl.view.main.table.assetTable
 
@@ -19,7 +18,7 @@ fun homeScreen(
     gainsFiat: Long,
     image: Int,
     currency: String,
-    onDeleteClick: (Int?) -> Unit,
+    onDeleteClick: (Int) -> Unit,
     toggleAddDialog: () -> Unit,
     toggleSettingsDialog: () -> Unit,
     toggleModifyDialog: (Int) -> Unit,
