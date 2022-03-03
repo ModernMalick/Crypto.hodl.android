@@ -16,6 +16,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.example.cryptohodl.HodlApp
 import com.example.cryptohodl.model.Asset
 import com.example.cryptohodl.toaster
+import java.util.*
 
 @Composable
 fun addDialog(
@@ -85,7 +86,7 @@ fun addDialog(
                     Button(onClick = {
                         if (tickerState.value.text != "" && investedState.value.text != "" && valueState.value.text != "") {
                             val asset = Asset(
-                                ticker = tickerState.value.text,
+                                ticker = tickerState.value.text.uppercase(Locale.getDefault()),
                                 invested = investedState.value.text.toLong(),
                                 value = valueState.value.text.toLong()
                             )

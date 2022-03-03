@@ -12,11 +12,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.cryptohodl.HodlApp
 import com.example.cryptohodl.model.Asset
 import com.example.cryptohodl.toaster
+import java.util.*
 
 @Composable
 fun modifyDialog(
@@ -104,7 +106,7 @@ fun modifyDialog(
                         }
 
                         val newAsset = Asset(
-                            ticker = ticker,
+                            ticker = ticker.uppercase(Locale.getDefault()),
                             invested = invested,
                             value = value,
                             id = asset.id
