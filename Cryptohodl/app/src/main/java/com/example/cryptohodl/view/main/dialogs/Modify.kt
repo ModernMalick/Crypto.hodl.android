@@ -1,6 +1,5 @@
 package com.example.cryptohodl.view.main.dialogs
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.KeyboardOptions
@@ -12,12 +11,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.example.cryptohodl.HodlApp
 import com.example.cryptohodl.model.Asset
-import com.example.cryptohodl.toaster
 import java.util.*
 
 @Composable
@@ -87,19 +83,19 @@ fun modifyDialog(
                         Text(currency)
                     }
                     Button(onClick = {
-                        val ticker = if(tickerState.value.text != ""){
+                        val ticker = if (tickerState.value.text != "") {
                             tickerState.value.text
                         } else {
                             asset.ticker
                         }
 
-                        val invested = if(investedState.value.text != ""){
+                        val invested = if (investedState.value.text != "") {
                             investedState.value.text.toLong()
                         } else {
                             asset.invested
                         }
 
-                        val value = if(valueState.value.text != ""){
+                        val value = if (valueState.value.text != "") {
                             valueState.value.text.toLong()
                         } else {
                             asset.value

@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
                 val showSettings = result.equals("settings")
                 var showModify = ""
 
-                if(!showAdd && !showSettings && result != ""){
+                if (!showAdd && !showSettings && result != "") {
                     showModify = result
                 }
 
@@ -119,7 +119,7 @@ class MainActivity : ComponentActivity() {
         assetViewModel.clearList()
         val thread = Thread {
             try {
-                if (assetDao.getAssets().isNotEmpty()){
+                if (assetDao.getAssets().isNotEmpty()) {
                     assetDao.getAssets().forEach { asset ->
                         runOnUiThread {
                             assetViewModel.addToCurrentList(asset)
@@ -186,16 +186,18 @@ class MainActivity : ComponentActivity() {
     private val toggleAddDialog = fun() {
         dialogViewModel.toggleShowAdd()
     }
+
     private val toggleSettingsDialog = fun(newCurrency: String) {
-        if(newCurrency.isNotBlank()){
+        if (newCurrency.isNotBlank()) {
             val sharedPref = getPreferences(Context.MODE_PRIVATE)
-            with (sharedPref.edit()) {
+            with(sharedPref.edit()) {
                 putString("currency", newCurrency)
                 apply()
             }
         }
         dialogViewModel.toggleShowSettings()
     }
+
     private val toggleModifyDialog = fun(string: String) {
         dialogViewModel.toggleShowModify(string)
     }
