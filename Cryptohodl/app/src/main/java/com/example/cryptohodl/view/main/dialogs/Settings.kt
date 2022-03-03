@@ -1,53 +1,51 @@
 package com.example.cryptohodl.view.main.dialogs
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 
 @Composable
-fun settingsDialog(onDismissClicked: () -> Unit) {
+fun settingsDialog(onDismissClicked: (String) -> Unit, currency: String) {
     val openDialog = remember { mutableStateOf(true) }
+    val properties = DialogProperties()
+    val currencyState = remember { mutableStateOf(TextFieldValue()) }
 
     if (openDialog.value) {
-        AlertDialog(
+        Dialog(
             onDismissRequest = {
                 openDialog.value = false
-                onDismissClicked()
+                onDismissClicked("")
             },
-            title = {
-                Text(
-                    text = "AlertDialog title"
-                )
-            },
-            text = {
-                Text(text = "Alert dialog test")
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        openDialog.value = false
-                        onDismissClicked()
+            properties = properties,
+            content = {
+                Column {
+                    TextField(
+                        value = currencyState.value,
+                        onValueChange = {
+                            currencyState.value = it
+                        },
+                        label = {
+                            Text("Currency")
+                        },
+                        placeholder = {
+                            Text(currency)
+                        }
+                    )
+                    Button(onClick = {
+                        onDismissClicked(currencyState.value.text)
+                    }) {
+                        Text("SAVE")
                     }
-                ) {
-                    Text(text = "Confirm", color = Color.White)
                 }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = {
-                        openDialog.value = false
-                        onDismissClicked()
-                    }
-                ) {
-                    Text(text = "Dismiss dialog", color = Color.Black)
-                }
-            },
-            backgroundColor = Color.Green,
-            contentColor = Color.White
+            }
         )
     }
 }

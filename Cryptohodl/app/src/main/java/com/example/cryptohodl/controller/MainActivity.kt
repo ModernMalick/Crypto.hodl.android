@@ -186,13 +186,15 @@ class MainActivity : ComponentActivity() {
     private val toggleAddDialog = fun() {
         dialogViewModel.toggleShowAdd()
     }
-    private val toggleSettingsDialog = fun() {
+    private val toggleSettingsDialog = fun(newCurrency: String) {
+        if(newCurrency.isNotBlank()){
+            val sharedPref = getPreferences(Context.MODE_PRIVATE)
+            with (sharedPref.edit()) {
+                putString("currency", newCurrency)
+                apply()
+            }
+        }
         dialogViewModel.toggleShowSettings()
-//        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-//        with (sharedPref.edit()) {
-//            putString("currency", "€")
-//            apply()
-//        }
     }
     private val toggleModifyDialog = fun(string: String) {
         dialogViewModel.toggleShowModify(string)

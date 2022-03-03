@@ -20,7 +20,7 @@ fun homeScreen(
     currency: String,
     onDeleteClick: (Int) -> Unit,
     toggleAddDialog: () -> Unit,
-    toggleSettingsDialog: () -> Unit,
+    toggleSettingsDialog: (String) -> Unit,
     toggleModifyDialog: (String) -> Unit,
     showAdd: Boolean,
     showSettings: Boolean,
@@ -37,7 +37,7 @@ fun homeScreen(
             Text("NEW")
         }
         Button(onClick = {
-            toggleSettingsDialog()
+            toggleSettingsDialog("")
         }) {
             Text("SETTINGS")
         }
@@ -46,6 +46,6 @@ fun homeScreen(
         addDialog(toggleAddDialog, onSaveAdd, currency)
     }
     if (showSettings) {
-        settingsDialog(toggleSettingsDialog)
+        settingsDialog(toggleSettingsDialog, currency)
     }
 }
