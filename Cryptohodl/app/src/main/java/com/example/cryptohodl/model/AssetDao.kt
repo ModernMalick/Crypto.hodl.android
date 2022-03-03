@@ -8,7 +8,7 @@ import androidx.room.Query
 
 @Dao
 interface AssetDao {
-    @Query("SELECT * FROM asset")
+    @Query("SELECT * FROM asset ORDER BY ticker ASC")
     fun getAssets(): List<Asset>
 
     @Query("SELECT * FROM asset WHERE id IN (:assetID)")
