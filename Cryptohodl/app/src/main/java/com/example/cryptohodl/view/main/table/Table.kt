@@ -15,6 +15,7 @@ fun assetTable(
     onSaveClicked: (Asset) -> Unit,
 ) {
     Column {
+        tableHeader()
         assets.forEach { asset ->
             val gain = asset.value - asset.invested
             var color = Color.Gray
