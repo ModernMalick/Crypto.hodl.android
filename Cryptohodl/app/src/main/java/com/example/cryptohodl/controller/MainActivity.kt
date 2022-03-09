@@ -73,9 +73,12 @@ class MainActivity : ComponentActivity() {
                 invested += asset.invested
             }
 
-            if (invested != 0.toLong()) {
-                gainsPercentage = ((value - invested) * 100) / invested
-                gainsFiat = value - invested
+            gainsFiat = value - invested
+
+            gainsPercentage = if (invested != 0.toLong()) {
+                ((value - invested) * 100) / invested
+            } else {
+                100
             }
 
             dialogViewModel.getMerger().observe(this, Observer { result ->
