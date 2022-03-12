@@ -35,14 +35,14 @@ fun header(
     Column(modifier = Modifier
         .background(color = CustomTheme.colors.surfaceA, rounded)
         .fillMaxWidth()
-        .padding(top = 36.dp, bottom = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        .padding(top = 36.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     )
         {
             Text("Bienvenue sur votre portfolio !", color = Color.White, style = CustomTheme.typography.big)
         Row(
-            horizontalArrangement = Arrangement.spacedBy(48.dp),
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier
@@ -58,7 +58,7 @@ fun header(
                     Text("$gainsPercentage% ($gainsFiat$currency)", color = color, style = CustomTheme.typography.small)
                 }
             }
-            Image(painterResource(image), "Portfolio status",
+            Image(painterResource(image), "Status de votre portfolio",
                 modifier = Modifier.size(64.dp)
             )
         }

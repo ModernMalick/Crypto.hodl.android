@@ -67,17 +67,15 @@ class MainActivity : ComponentActivity() {
 
             var value: Long = 0
             var invested: Long = 0
-            var gainsPercentage: Long = 0
-            var gainsFiat: Long = 0
 
             assets.forEach { asset ->
                 value += asset.value
                 invested += asset.invested
             }
 
-            gainsFiat = value - invested
+            val gainsFiat: Long = value - invested
 
-            gainsPercentage = if (invested != 0.toLong()) {
+            val gainsPercentage: Long = if (invested != 0.toLong()) {
                 ((value - invested) * 100) / invested
             } else {
                 100

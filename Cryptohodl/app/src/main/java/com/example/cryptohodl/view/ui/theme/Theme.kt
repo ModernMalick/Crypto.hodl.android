@@ -26,6 +26,7 @@ data class CustomColors(
 data class CustomTypography(
     val small: TextStyle,
     val medium: TextStyle,
+    val th: TextStyle,
     val big: TextStyle
 )
 
@@ -46,6 +47,7 @@ val LocalCustomTypography = staticCompositionLocalOf {
     CustomTypography(
         small = TextStyle.Default,
         medium = TextStyle.Default,
+        th = TextStyle.Default,
         big = TextStyle.Default
     )
 }
@@ -66,6 +68,7 @@ fun CryptohodlTheme(content: @Composable() () -> Unit) {
     val customTypography = CustomTypography(
         small = TextStyle(fontSize = 14.sp, fontFamily = Montserrat),
         medium = TextStyle(fontSize = 16.sp, fontFamily = Montserrat),
+        th = TextStyle(fontSize = 14.sp, fontFamily = Montserrat, fontWeight = FontWeight.Bold),
         big = TextStyle(fontSize = 18.sp, fontFamily = Montserrat, fontWeight = FontWeight.Bold),
     )
     CompositionLocalProvider(
