@@ -1,21 +1,21 @@
-NAME
-Crypto.hodl - Growth tracker
+NOM
+Crypto.hodl - Hodl your gains
 
-SUBTITLE
-Follow your crypto portfolio's growth
+SOUS TITRE
+Suivez la croissance de votre portefeuille de cryptomonnaies
 
 DESCRIPTION
-By inputting how much you invested in an asset along with the current value of said asset, Crypto.hodl 
-allows you to see the growth of your portfolio.
+En saisissant combien vous avez investi dans un actif ainsi que la valeur actuelle dudit actif, Crypto.hodl
+vous permet de voir la croissance de vos investissements.
 
-KEYWORDS
-Crypto investing portfolio growth tracker 
+MOTS CLES
+Crypto investissement portfolio croissance gain tracker suivi
 
-REQUIREMENTS
-1- Add assets
-2- Track assets
-3- Update assets
-4- Delete assets
-5- Select currency
-6- Track portfolio
+NECESSITES
+1- Ajout d'actifs
+2- Suivi d'actifs
+3- Mis à jour d'actifs
+4- Suppression d'actifs
+5- Selection de la devise
+6- Suivi du portfolio
 7- Glassmorphism

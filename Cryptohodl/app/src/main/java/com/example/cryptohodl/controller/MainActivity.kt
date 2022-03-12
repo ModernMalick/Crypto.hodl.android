@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
@@ -16,6 +17,7 @@ import com.example.cryptohodl.notifyObserver
 import com.example.cryptohodl.view.main.dialogs.DialogViewModel
 import com.example.cryptohodl.view.main.homeScreen
 import com.example.cryptohodl.view.main.table.AssetViewModel
+import com.example.cryptohodl.view.ui.theme.CryptohodlTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -81,6 +83,13 @@ class MainActivity : ComponentActivity() {
                 100
             }
 
+            var statusImage = R.drawable.bankrupt
+            if(gainsFiat > 0){
+                statusImage = R.drawable.rocket
+            } else if(gainsFiat < 0){
+                statusImage = R.drawable.explosion
+            }
+
             dialogViewModel.getMerger().observe(this, Observer { result ->
                 val showAdd = result.equals("add")
                 val showSettings = result.equals("settings")
@@ -93,25 +102,28 @@ class MainActivity : ComponentActivity() {
                 val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
                 val currency = sharedPreferences.getString("currency", "$").toString()
 
+                WindowCompat.setDecorFitsSystemWindows(window, false)
                 setContent {
-                    homeScreen(
-                        assets,
-                        value,
-                        invested,
-                        gainsPercentage,
-                        gainsFiat,
-                        R.drawable.placeholder,
-                        currency,
-                        deleteAsset,
-                        toggleAddDialog,
-                        toggleSettingsDialog,
-                        toggleModifyDialog,
-                        showAdd,
-                        showSettings,
-                        showModify,
-                        addAsset,
-                        modifyAsset
-                    )
+                    CryptohodlTheme {
+                        homeScreen(
+                            assets,
+                            value,
+                            invested,
+                            gainsPercentage,
+                            gainsFiat,
+                            statusImage,
+                            currency,
+                            deleteAsset,
+                            toggleAddDialog,
+                            toggleSettingsDialog,
+                            toggleModifyDialog,
+                            showAdd,
+                            showSettings,
+                            showModify,
+                            addAsset,
+                            modifyAsset
+                        )
+                    }
                 }
             })
         })
