@@ -1,13 +1,15 @@
 package com.example.cryptohodl.view.main.table
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.cryptohodl.model.Asset
@@ -23,23 +25,27 @@ fun assetTable(
     showModify: String,
     onSaveClicked: (Asset) -> Unit,
 ) {
-    Column ( modifier = Modifier
-                .background(color = CustomTheme.colors.surfaceA, rounded)
-                .padding(vertical = 16.dp, horizontal = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+    Column(
+        modifier = Modifier
+            .background(color = CustomTheme.colors.surfaceA, rounded)
+            .padding(vertical = 16.dp, horizontal = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         tableHeader()
-        if(assets.isEmpty()){
-            Text(text ="Veuillez ajouter un investissement ci-dessous afin de calculer vos gains",
+        if (assets.isEmpty()) {
+            Text(
+                text = "Veuillez ajouter un investissement ci-dessous afin de calculer vos gains",
                 style = CustomTheme.typography.small,
                 color = CustomTheme.colors.gainDefault,
-                textAlign = TextAlign.Center)
+                textAlign = TextAlign.Center
+            )
         } else {
-            Column (modifier = Modifier
-                .verticalScroll(rememberScrollState()),
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
-            ){
+            ) {
                 assets.forEach { asset ->
                     val gain = asset.value - asset.invested
                     var color = CustomTheme.colors.gainDefault

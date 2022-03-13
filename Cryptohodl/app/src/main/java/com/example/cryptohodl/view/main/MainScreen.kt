@@ -2,11 +2,8 @@ package com.example.cryptohodl.view.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +37,8 @@ fun homeScreen(
     showSettings: Boolean,
     showModify: String,
     onSaveAdd: (Asset) -> Unit,
-    onSaveModify: (Asset) -> Unit
+    onSaveModify: (Asset) -> Unit,
+    rate: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -54,8 +52,9 @@ fun homeScreen(
                     end = Offset(Float.POSITIVE_INFINITY.times(0.5f), Float.POSITIVE_INFINITY.times(0.5f))
                 )
             )
-            .fillMaxSize()
-    ){
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
         Column(
             modifier = Modifier
                 .matchParentSize(),
@@ -63,22 +62,24 @@ fun homeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             header(value, invested, gainsPercentage, gainsFiat, image, currency)
-            Box(modifier = Modifier
-                .padding(start = 16.dp, end = 16.dp)
-                .weight(1f)
+            Box(
+                modifier = Modifier
+                    .padding(start = 16.dp, end = 16.dp)
+                    .weight(1f)
             ) {
                 assetTable(assets, currency, onDeleteClick, toggleModifyDialog, showModify, onSaveModify)
             }
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, bottom = 36.dp),
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, bottom = 36.dp),
             ) {
                 FloatingActionButton(
                     onClick = { toggleAddDialog() },
                     backgroundColor = Color.White,
                     modifier = Modifier
-                    .align(Alignment.Center)
-                    .size(64.dp)
+                        .align(Alignment.Center)
+                        .size(64.dp)
                 ) {
                     Image(painterResource(R.drawable.plus), "Ajouter un investissement")
                 }
@@ -86,8 +87,8 @@ fun homeScreen(
                     onClick = { toggleSettingsDialog("") },
                     backgroundColor = Color.White,
                     modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .size(48.dp)
+                        .align(Alignment.BottomEnd)
+                        .size(48.dp)
                 ) {
                     Image(painterResource(R.drawable.settings), "Paramètres")
                 }
@@ -97,7 +98,7 @@ fun homeScreen(
             addDialog(toggleAddDialog, onSaveAdd, currency)
         }
         if (showSettings) {
-            settingsDialog(toggleSettingsDialog, currency)
+            settingsDialog(toggleSettingsDialog, currency, rate)
         }
     }
 }

@@ -1,14 +1,22 @@
 package com.example.cryptohodl.controller
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
+import com.example.cryptohodl.HodlApp.Companion.context
 import com.example.cryptohodl.R
 import com.example.cryptohodl.model.Asset
 import com.example.cryptohodl.model.AssetDao
@@ -75,16 +83,20 @@ class MainActivity : ComponentActivity() {
 
             val gainsFiat: Long = value - invested
 
-            val gainsPercentage: Long = if (invested != 0.toLong()) {
+            var gainsPercentage: Long = if (invested != 0.toLong()) {
                 ((value - invested) * 100) / invested
             } else {
                 100
             }
 
+            if ((value == 0.toLong()) && (invested == 0.toLong())) {
+                gainsPercentage = 0
+            }
+
             var statusImage = R.drawable.bankrupt
-            if(gainsFiat > 0){
+            if (gainsFiat > 0) {
                 statusImage = R.drawable.rocket
-            } else if(gainsFiat < 0){
+            } else if (gainsFiat < 0) {
                 statusImage = R.drawable.explosion
             }
 
@@ -98,7 +110,17 @@ class MainActivity : ComponentActivity() {
                 }
 
                 val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
-                val currency = sharedPreferences.getString("currency", "$").toString()
+                val currency = sharedPreferences.getString("currency", "€").toString()
+                val intro = sharedPreferences.getBoolean("intro", true)
+
+                if (intro && assets.size > 0) {
+                    Toast.makeText(
+                        context,
+                        "Appuyez sur une ligne du tableau pour la modifier",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    sharedPreferences.edit().putBoolean("intro", false).apply()
+                }
 
                 WindowCompat.setDecorFitsSystemWindows(window, false)
                 setContent {
@@ -119,7 +141,8 @@ class MainActivity : ComponentActivity() {
                             showSettings,
                             showModify,
                             addAsset,
-                            modifyAsset
+                            modifyAsset,
+                            rate
                         )
                     }
                 }
@@ -213,5 +236,9 @@ class MainActivity : ComponentActivity() {
 
     private val toggleModifyDialog = fun(string: String) {
         dialogViewModel.toggleShowModify(string)
+    }
+
+    private val rate = fun() {
+        Log.e("Rate", "PRESSED")
     }
 }

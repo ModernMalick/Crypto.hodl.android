@@ -2,13 +2,11 @@ package com.example.cryptohodl.view.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,22 +30,24 @@ fun header(
     } else if (gainsFiat < 0) {
         color = CustomTheme.colors.gainBad
     }
-    Column(modifier = Modifier
-        .background(color = CustomTheme.colors.surfaceA, rounded)
-        .fillMaxWidth()
-        .padding(top = 36.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
+    Column(
+        modifier = Modifier
+            .background(color = CustomTheme.colors.surfaceA, rounded)
+            .fillMaxWidth()
+            .padding(top = 36.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     )
-        {
-            Text("Bienvenue sur votre portfolio !", color = Color.White, style = CustomTheme.typography.big)
+    {
+        Text("Bienvenue sur votre portfolio !", color = Color.White, style = CustomTheme.typography.big)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(modifier = Modifier
-                    ,
-                verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(
+                modifier = Modifier,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 Row {
                     Text("Valeur actuelle: ", color = Color.White, style = CustomTheme.typography.medium)
                     Text("$value$currency", color = color, style = CustomTheme.typography.medium)
@@ -58,7 +58,8 @@ fun header(
                     Text("$gainsPercentage% ($gainsFiat$currency)", color = color, style = CustomTheme.typography.small)
                 }
             }
-            Image(painterResource(image), "Status de votre portfolio",
+            Image(
+                painterResource(image), "Status de votre portfolio",
                 modifier = Modifier.size(64.dp)
             )
         }
